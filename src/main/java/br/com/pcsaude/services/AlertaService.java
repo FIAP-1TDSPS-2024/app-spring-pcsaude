@@ -6,7 +6,9 @@ import br.com.pcsaude.entities.Usuario;
 import br.com.pcsaude.repositories.AlertaRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.stereotype.Service;
 
+@Service
 public class AlertaService {
 
     private final AlertaRepository repository;

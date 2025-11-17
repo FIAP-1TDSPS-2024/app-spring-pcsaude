@@ -6,7 +6,9 @@ import br.com.pcsaude.enums.SuporteStatusEnum;
 import br.com.pcsaude.repositories.SuporteRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.stereotype.Service;
 
+@Service
 public class SuporteService {
 
     private final SuporteRepository repository;

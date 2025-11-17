@@ -6,7 +6,9 @@ import br.com.pcsaude.exceptions.UniqueKeyDuplicadaException;
 import br.com.pcsaude.repositories.UsuarioRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.stereotype.Service;
 
+@Service
 public class UsuarioService {
 
     private final UsuarioRepository repository;
