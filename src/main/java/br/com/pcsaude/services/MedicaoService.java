@@ -1,5 +1,6 @@
 package br.com.pcsaude.services;
 
+import br.com.pcsaude.entities.Dispositivo;
 import br.com.pcsaude.entities.Medicao;
 import br.com.pcsaude.entities.Usuario;
 import br.com.pcsaude.repositories.MedicaoRepository;
@@ -23,9 +24,11 @@ public class MedicaoService {
         //TO DO Usuário deve ser definido por contexto
         Usuario usuario = new Usuario();
 
+        Dispositivo dispositivo = usuario.getDispositivo();
+
         return this.repository
-                .findAllByUsuario_Id(
-                        usuario.getId(),
+                .findAllByDispositivo_Uuid(
+                        dispositivo.getUuid(),
                         Pageable
                         .ofSize(size)
                         .withPage(page));
@@ -36,8 +39,10 @@ public class MedicaoService {
         //TO DO Usuário deve ser definido por contexto
         Usuario usuario = new Usuario();
 
+        Dispositivo dispositivo = usuario.getDispositivo();
+
         return this.repository
-                .findFisrtByUsuario_IdOrderByMomentoMedicaoDesc(usuario.getId())
+                .findFisrtByDispositivo_UuidOrderByMomentoMedicaoDesc(dispositivo.getUuid())
                 .orElseThrow();
     }
 }
