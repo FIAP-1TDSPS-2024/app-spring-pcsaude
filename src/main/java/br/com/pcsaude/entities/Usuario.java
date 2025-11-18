@@ -85,7 +85,8 @@ public class Usuario {
                    BigDecimal altura,
                    BigDecimal peso,
                    SexoEnum sexo,
-                   ModeloTrabalhoEnum modeloTrabalho) {
+                   ModeloTrabalhoEnum modeloTrabalho,
+                   Dispositivo dispositivo) {
 
         this.role = (role == null ? Role.USER : role);
         this.modeloTrabalho = (modeloTrabalho == null ? ModeloTrabalhoEnum.PRESENCIAL : modeloTrabalho);
