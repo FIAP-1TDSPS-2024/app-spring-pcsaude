@@ -23,13 +23,6 @@ public class UsuarioService {
                         .orElseThrow();
     }
 
-    public Page<Usuario> findAll(int page, int size){
-        return this.repository
-                        .findAll( Pageable
-                                .ofSize(size)
-                                .withPage(page));
-    }
-
     public Usuario save(Usuario usuario){
 
         if (this.repository.findFirstByNome(usuario.getNome()) != null){
