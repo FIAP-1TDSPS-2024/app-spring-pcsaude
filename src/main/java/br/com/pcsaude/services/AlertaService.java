@@ -3,10 +3,13 @@ package br.com.pcsaude.services;
 import br.com.pcsaude.entities.Alerta;
 import br.com.pcsaude.entities.Suporte;
 import br.com.pcsaude.entities.Usuario;
+import br.com.pcsaude.exceptions.ResourceNotFoundException;
 import br.com.pcsaude.repositories.AlertaRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+
+import java.util.NoSuchElementException;
 
 @Service
 public class AlertaService {
@@ -18,7 +21,12 @@ public class AlertaService {
     }
 
     public Alerta findById(Long id) {
-        return repository.findById(id).orElseThrow();
+        try {
+            return this.repository.findById(id).orElseThrow();
+        }
+        catch (NoSuchElementException e){
+            throw new ResourceNotFoundException("Não foi possível encontrar um alerta com o id " + id);
+        }
     }
 
     public Page<Alerta> findAll(int page, int size) {

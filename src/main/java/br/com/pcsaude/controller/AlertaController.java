@@ -5,6 +5,7 @@ import br.com.pcsaude.mappers.AlertaMapper;
 import br.com.pcsaude.records.AlertaOutDto;
 import br.com.pcsaude.services.AlertaService;
 import org.springframework.data.domain.Page;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -21,15 +22,22 @@ public class AlertaController {
     }
 
     @GetMapping("/{id}")
-    public AlertaOutDto findById(@PathVariable Long id) {
+    public ResponseEntity<AlertaOutDto> findById(@PathVariable Long id) {
         Alerta alerta = service.findById(id);
-        return AlertaMapper.toDto(alerta);
+        return ResponseEntity.ok(AlertaMapper.toDto(alerta));
     }
 
     @GetMapping
-    public Page<AlertaOutDto> findAllByUsuario(int page, int size) {
-        return this.service
-                .findAll(page, size)
-                .map(AlertaMapper::toDto);
+    public ResponseEntity<Page<AlertaOutDto>> findAllByUsuario(int page, int size) {
+        Page<AlertaOutDto> pagina = this.service
+                                        .findAll(page, size)
+                                        .map(AlertaMapper::toDto);
+
+        if (pagina.getTotalElements() > 0) {
+            return ResponseEntity.ok(pagina);
+        }
+        else{
+            return ResponseEntity.noContent().build();
+        }
     }
 }

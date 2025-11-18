@@ -8,6 +8,7 @@ import br.com.pcsaude.records.SuporteInDto;
 import br.com.pcsaude.records.SuporteOutDto;
 import br.com.pcsaude.services.SuporteService;
 import org.springframework.data.domain.Page;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -21,34 +22,47 @@ public class SuporteController {
     }
 
     @GetMapping("/{id}")
-    public SuporteOutDto findById(@PathVariable Long id) {
+    public ResponseEntity<SuporteOutDto> findById(@PathVariable Long id) {
         Suporte suporte = this.service.findById(id);
-        return SuporteMapper.toDto(suporte);
+        SuporteOutDto suporteOutDto = SuporteMapper.toDto(suporte);
+        return ResponseEntity.ok(suporteOutDto);
     }
 
     @GetMapping
-    public Page<SuporteOutDto> findAll(
+    public ResponseEntity<Page<SuporteOutDto>> findAll(
             @RequestParam(required = false, defaultValue = "0") int page,
             @RequestParam(required = false, defaultValue = "10") int size) {
-        return this.service
+
+        Page<SuporteOutDto> pagina = this.service
                 .findAll(page, size)
                 .map(SuporteMapper::toDto);
+
+        if (pagina.getTotalElements() > 0) {
+            return ResponseEntity.ok(pagina);
+        }
+        else{
+            return ResponseEntity.noContent().build();
+        }
     }
 
     @PostMapping
-    public SuporteOutDto save(@RequestBody SuporteInDto dto) {
+    public ResponseEntity<SuporteOutDto> save(@RequestBody SuporteInDto dto) {
 
         //TO DO Usuário deve ser definido por contexto
         Usuario usuario = new Usuario();
 
         Suporte suporte = SuporteMapper.fromDto(usuario, dto);
         Suporte newSuporte = this.service.save(suporte);
-        return SuporteMapper.toDto(newSuporte);
+        SuporteOutDto novoSuporte = SuporteMapper.toDto(newSuporte);
+
+        return ResponseEntity.ok(novoSuporte);
     }
 
     @PutMapping("/{id}")
-    public SuporteOutDto cancelar(@PathVariable Long id) {
+    public ResponseEntity<SuporteOutDto> cancelar(@PathVariable Long id) {
         Suporte suporteAtualizado = this.service.cancelar(id);
-        return SuporteMapper.toDto(suporteAtualizado);
+        SuporteOutDto suporteCancelado = SuporteMapper.toDto(suporteAtualizado);
+
+        return ResponseEntity.ok(suporteCancelado);
     }
 }

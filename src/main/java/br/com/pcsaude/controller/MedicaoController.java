@@ -8,6 +8,7 @@ import br.com.pcsaude.records.MedicaoOutDto;
 import br.com.pcsaude.services.DispositivoService;
 import br.com.pcsaude.services.MedicaoService;
 import org.springframework.data.domain.Page;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -24,7 +25,7 @@ public class MedicaoController {
     }
 
     @PostMapping
-    public MedicaoOutDto save(@RequestBody MedicaoInDto dto) {
+    public ResponseEntity<MedicaoOutDto> save(@RequestBody MedicaoInDto dto) {
 
         Dispositivo dispositivo = new Dispositivo(dto.uuidDispositivo());
 
@@ -32,20 +33,31 @@ public class MedicaoController {
 
         this.dispositivoService.save(dispositivo);
 
-        return MedicaoMapper.toDto(this.service.save(medicao));
+        MedicaoOutDto medicaoSalva =  MedicaoMapper.toDto(this.service.save(medicao));
+
+        return ResponseEntity.ok(medicaoSalva);
     }
 
     @GetMapping("/ultima-medicao")
-    public MedicaoOutDto findUltimaMedicao() {
-        return MedicaoMapper.toDto(this.service.findUltimaMedicao());
+    public ResponseEntity<MedicaoOutDto> findUltimaMedicao() {
+        MedicaoOutDto ultimaMedicao = MedicaoMapper.toDto(this.service.findUltimaMedicao());
+        return ResponseEntity.ok(ultimaMedicao);
     }
 
     @GetMapping
-    public Page<MedicaoOutDto> findAll(
+    public ResponseEntity<Page<MedicaoOutDto>> findAll(
             @RequestParam(required = false, defaultValue = "0") int page,
             @RequestParam(required = false, defaultValue = "10") int size) {
-        return this.service
-                .findAll(page, size)
-                .map(MedicaoMapper::toDto);
+
+        Page<MedicaoOutDto> pagina = this.service
+                                            .findAll(page, size)
+                                            .map(MedicaoMapper::toDto);
+
+        if (pagina.getTotalElements() > 0) {
+            return ResponseEntity.ok(pagina);
+        }
+        else{
+            return ResponseEntity.noContent().build();
+        }
     }
 }

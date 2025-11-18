@@ -4,6 +4,7 @@ import br.com.pcsaude.entities.Usuario;
 import br.com.pcsaude.mappers.UsuarioMapper;
 import br.com.pcsaude.records.UsuarioOutDto;
 import br.com.pcsaude.services.UsuarioService;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -17,14 +18,17 @@ public class UsuarioController {
     }
 
     @GetMapping("/{id}")
-    public UsuarioOutDto findById(@PathVariable Long id) {
+    public ResponseEntity<UsuarioOutDto> findById(@PathVariable Long id) {
         Usuario usuario = service.findById(id);
-        return UsuarioMapper.toDto(usuario);
+        UsuarioOutDto usuarioOutDto = UsuarioMapper.toDto(usuario);
+
+        return ResponseEntity.ok(usuarioOutDto);
     }
 
     @PutMapping
-    public UsuarioOutDto update(@RequestBody Usuario usuario) {
+    public ResponseEntity<UsuarioOutDto> update(@RequestBody Usuario usuario) {
         Usuario usuarioUpdate = service.update(usuario);
-        return UsuarioMapper.toDto(usuarioUpdate);
+        UsuarioOutDto usuarioAtualizado =  UsuarioMapper.toDto(usuarioUpdate);
+        return ResponseEntity.ok(usuarioAtualizado);
     }
 }

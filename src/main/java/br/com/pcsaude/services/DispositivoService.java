@@ -1,8 +1,11 @@
 package br.com.pcsaude.services;
 
 import br.com.pcsaude.entities.Dispositivo;
+import br.com.pcsaude.exceptions.ResourceNotFoundException;
 import br.com.pcsaude.repositories.DispositivoRepository;
 import org.springframework.stereotype.Service;
+
+import java.util.NoSuchElementException;
 
 @Service
 public class DispositivoService {
@@ -14,7 +17,12 @@ public class DispositivoService {
     }
 
     public Dispositivo findById(String uuid) {
-        return this.repository.findById(uuid).orElseThrow();
+        try {
+            return this.repository.findById(uuid).orElseThrow();
+        }
+        catch (NoSuchElementException e){
+            throw new ResourceNotFoundException("Não foi possível encontrar um Dispositivo com o uuid " + uuid);
+        }
     }
 
     public Dispositivo save(Dispositivo dispositivo) {

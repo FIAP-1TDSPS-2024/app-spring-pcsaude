@@ -8,6 +8,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.NoSuchElementException;
+
 @Service
 public class UsuarioService {
 
@@ -18,9 +20,12 @@ public class UsuarioService {
     }
 
     public Usuario findById(Long id){
-        return this.repository
-                        .findById(id)
-                        .orElseThrow();
+        try {
+            return this.repository.findById(id).orElseThrow();
+        }
+        catch (NoSuchElementException e){
+            throw new ResourceNotFoundException("Não foi possível encontrar um usuário com o id " + id);
+        }
     }
 
     public Usuario save(Usuario usuario){

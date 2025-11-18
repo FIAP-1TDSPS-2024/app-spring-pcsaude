@@ -34,7 +34,7 @@ public class Usuario {
 
     @NotNull(message = "A senha não pode ser nula")
     @Length(min = 8, message = "A senha deve possuir pelo menos 8 caracteres")
-    @Column(name = "senha", nullable = false)
+    @Column(name = "senha_hash", nullable = false)
     private String senha;
 
     @Digits(integer = 3, fraction = 2,
