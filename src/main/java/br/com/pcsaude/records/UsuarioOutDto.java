@@ -26,10 +26,6 @@ public record UsuarioOutDto(
         @Length(max = 40, message = "O e-mail deve ter no máximo 40 caracteres")
         String email,
 
-        @NotNull(message = "A senha não pode ser nula")
-        @Length(min = 8, message = "A senha deve possuir pelo menos 8 caracteres")
-        String senha,
-
         @Digits(integer = 3, fraction = 2, message = "A altura deve ter até 3 dígitos antes e 2 após a vírgula")
         @DecimalMin(value = "0.0", message = "A altura não deve ser negativa")
         BigDecimal altura,

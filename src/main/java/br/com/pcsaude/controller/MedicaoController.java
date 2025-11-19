@@ -7,6 +7,7 @@ import br.com.pcsaude.records.MedicaoInDto;
 import br.com.pcsaude.records.MedicaoOutDto;
 import br.com.pcsaude.services.DispositivoService;
 import br.com.pcsaude.services.MedicaoService;
+import jakarta.validation.Valid;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -25,7 +26,7 @@ public class MedicaoController {
     }
 
     @PostMapping
-    public ResponseEntity<MedicaoOutDto> save(@RequestBody MedicaoInDto dto) {
+    public ResponseEntity<MedicaoOutDto> save(@Valid @RequestBody MedicaoInDto dto) {
 
         Dispositivo dispositivo = new Dispositivo(dto.uuidDispositivo());
 

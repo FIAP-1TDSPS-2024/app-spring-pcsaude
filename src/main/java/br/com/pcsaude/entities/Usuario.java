@@ -116,6 +116,7 @@ public class Usuario implements UserDetails {
         this.altura = altura;
         this.peso = peso;
         this.sexo = sexo;
+        this.dispositivo = dispositivo;
 
         this.dataCadastro = LocalDate.now();
     }

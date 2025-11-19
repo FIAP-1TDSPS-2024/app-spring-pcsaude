@@ -6,6 +6,7 @@ import br.com.pcsaude.exceptions.UniqueKeyDuplicadaException;
 import br.com.pcsaude.repositories.UsuarioRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.NoSuchElementException;
@@ -15,8 +16,14 @@ public class UsuarioService {
 
     private final UsuarioRepository repository;
 
-    public UsuarioService(UsuarioRepository repository) {
+    private final DispositivoService dispositivoService;
+
+    private final PasswordEncoder passwordEncoder;
+
+    public UsuarioService(UsuarioRepository repository, DispositivoService dispositivoService, PasswordEncoder passwordEncoder) {
         this.repository = repository;
+        this.dispositivoService = dispositivoService;
+        this.passwordEncoder = passwordEncoder;
     }
 
     public Usuario findById(Long id){
@@ -29,13 +36,13 @@ public class UsuarioService {
     }
 
     public Usuario save(Usuario usuario){
-
-        if (this.repository.findFirstByNome(usuario.getNome()) != null){
-            throw new UniqueKeyDuplicadaException("Já existe um usuário cadastrado com o nome " + usuario.getNome());
-        }
         if (this.repository.findFirstByEmail(usuario.getEmail()) != null){
             throw new UniqueKeyDuplicadaException("Já existe um usuário cadastrado com o e-mail " + usuario.getEmail());
         }
+
+        this.dispositivoService.save(usuario.getDispositivo());
+
+        usuario.setSenha(this.passwordEncoder.encode(usuario.getSenha()));
 
         return this.repository.save(usuario);
     }

@@ -4,6 +4,7 @@ import br.com.pcsaude.entities.Usuario;
 import br.com.pcsaude.mappers.UsuarioMapper;
 import br.com.pcsaude.records.UsuarioOutDto;
 import br.com.pcsaude.services.UsuarioService;
+import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -26,7 +27,7 @@ public class UsuarioController {
     }
 
     @PutMapping
-    public ResponseEntity<UsuarioOutDto> update(@RequestBody Usuario usuario) {
+    public ResponseEntity<UsuarioOutDto> update(@Valid @RequestBody Usuario usuario) {
         Usuario usuarioUpdate = service.update(usuario);
         UsuarioOutDto usuarioAtualizado =  UsuarioMapper.toDto(usuarioUpdate);
         return ResponseEntity.ok(usuarioAtualizado);

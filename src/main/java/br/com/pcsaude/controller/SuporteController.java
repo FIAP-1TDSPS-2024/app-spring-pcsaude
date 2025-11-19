@@ -7,6 +7,7 @@ import br.com.pcsaude.mappers.SuporteMapper;
 import br.com.pcsaude.records.SuporteInDto;
 import br.com.pcsaude.records.SuporteOutDto;
 import br.com.pcsaude.services.SuporteService;
+import jakarta.validation.Valid;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -46,7 +47,7 @@ public class SuporteController {
     }
 
     @PostMapping
-    public ResponseEntity<SuporteOutDto> save(@RequestBody SuporteInDto dto) {
+    public ResponseEntity<SuporteOutDto> save(@Valid @RequestBody SuporteInDto dto) {
 
         //TO DO Usuário deve ser definido por contexto
         Usuario usuario = new Usuario();
