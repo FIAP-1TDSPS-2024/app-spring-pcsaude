@@ -43,8 +43,7 @@ public class SecurityConfig {
                 .cors(cors -> cors.configurationSource(corsConfigurationSource()))
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/api/auth/**").permitAll()
-                        .requestMatchers("/error").permitAll()
+                        .requestMatchers("api/auth/**", "/error", "/health", "/swagger-ui/**", "/swagger-ui.html", "/v3/api-docs/**").permitAll()
                         .requestMatchers("/api/alertas/**").hasAnyRole("USER", "PREMIUM")
                         .requestMatchers(HttpMethod.POST, "/api/medicoes").permitAll()
                         .requestMatchers("/api/medicoes/**").hasAnyRole("USER", "PREMIUM")
