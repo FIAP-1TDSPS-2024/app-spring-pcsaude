@@ -47,4 +47,15 @@ public class UsuarioController {
         UsuarioOutDto usuarioAtualizado =  UsuarioMapper.toDto(usuarioUpdate);
         return ResponseEntity.ok(usuarioAtualizado);
     }
+
+    @Operation(summary = "Deletar usuário", description = "Deleta o usuário identificado pelo id")
+    @ApiResponses({
+            @ApiResponse(responseCode = "204", description = "Usuário deletado com sucesso"),
+            @ApiResponse(responseCode = "404", description = "Usuário não encontrado")
+    })
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> delete(@Parameter(description = "Id do usuário", required = true) @PathVariable Long id) {
+        service.delete(id);
+        return ResponseEntity.noContent().build(); 
+    }
 }
