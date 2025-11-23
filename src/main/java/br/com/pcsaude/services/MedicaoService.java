@@ -34,10 +34,12 @@ public class MedicaoService {
 
     public Medicao save(Medicao medicao){
 
-        //Verificação de medidas para criação de alertas se necessário:
-        criarAlertas(medicao);
+        Medicao novaMedicao = repository.save(medicao);
 
-        return repository.save(medicao);
+        //Verificação de medidas para criação de alertas se necessário:
+        criarAlertas(novaMedicao);
+
+        return novaMedicao;
     }
 
     public Page<Medicao> findAll(int page, int size){
@@ -46,12 +48,7 @@ public class MedicaoService {
 
         Dispositivo dispositivo = dispositivoService.findById(usuario.getDispositivo().getUuid());
 
-        return this.repository
-                .findAllByDispositivoUuid(
-                        dispositivo.getUuid(),
-                        Pageable
-                        .ofSize(size)
-                        .withPage(page));
+        return this.repository.findAll(Pageable.ofSize(size).withPage(page));
     }
 
     public Medicao findUltimaMedicao(){
@@ -66,7 +63,7 @@ public class MedicaoService {
                     .orElseThrow();
         }
         catch (NoSuchElementException e){
-            throw new ResourceNotFoundException("Não foi possível encontrar medições para seu dispositivo. ");
+            throw new ResourceNotFoundException("Não foi possível encontrar medições para seu dispositivo. " + e.getMessage());
         }
 
     }

@@ -15,6 +15,6 @@ public interface MedicaoRepository extends JpaRepository<Medicao, Long> {
     @Query(value = "SELECT * FROM medicao m WHERE m.dispositivo_id = :uuid ORDER BY m.momento_medicao DESC", nativeQuery = true)
     Page<Medicao> findAllByDispositivoUuid(@Param("uuid") String uuid, Pageable pageable);
 
-    @Query(value = "SELECT * FROM medicao WHERE dispositivo_id = :uuid ORDER BY momento_medicao DESC FETCH FIRST 1 ROWS ONLY", nativeQuery = true)
+    @Query(value = "SELECT * FROM medicao WHERE dispositivo_id = :uuid  ORDER BY momento_medicao DESC FETCH FIRST 1 ROWS ONLY", nativeQuery = true)
     Optional<Medicao> findFirstByDispositivoUuidOrderByMomentoMedicaoDesc(@Param("uuid") String uuid);
 }

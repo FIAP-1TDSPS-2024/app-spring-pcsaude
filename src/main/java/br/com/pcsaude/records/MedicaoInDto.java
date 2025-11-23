@@ -13,7 +13,6 @@ public record MedicaoInDto(
         @NotNull(message = "O uuid do dispositivo é obrigatório")
         String uuidDispositivo,
 
-        @Length(max = 50, message = "A descrição da postura deve ter no máximo 50 caracteres")
         PosturaEnum postura,
 
         @Min(value = 0, message = "O tempo sentado não pode ser negativo")

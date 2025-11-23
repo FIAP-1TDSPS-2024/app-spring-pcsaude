@@ -28,7 +28,6 @@ public class Medicao {
     private Dispositivo dispositivo;
 
     @Enumerated(EnumType.STRING)
-    @Length(max = 50, message = "A descrição da postura deve ter no máximo 50 caracteres")
     private PosturaEnum postura;
 
     @Min(value = 0, message = "O tempo sentado não pode ser negativo")
