@@ -48,7 +48,11 @@ public class MedicaoService {
 
         Dispositivo dispositivo = dispositivoService.findById(usuario.getDispositivo().getUuid());
 
-        return this.repository.findAll(Pageable.ofSize(size).withPage(page));
+        return this.repository.findAllByDispositivoUuid(
+                dispositivo.getUuid(),
+                Pageable
+                        .ofSize(size)
+                        .withPage(page));
     }
 
     public Medicao findUltimaMedicao(){
