@@ -21,7 +21,7 @@
 
 > Acesse o Link abaixo para assistir ao vídeo explicativo da solução.
 
-[Vídeo Explicativo no YouTube](https://www.youtube.com/watch?v=wSOUlz6PsAY)
+[Vídeo Explicativo no YouTube](https://youtu.be/CcEMJrcE6EA)
 
 ## 👥 Integrantes do Grupo – CATECH
 
@@ -39,19 +39,13 @@
 git clone https://github.com/FIAP-1TDSPS-2024/rei-dos-piratas.git
 ```
 
-2. Acesse o diretório do projeto:
-
-```bash
-cd rei-dos-piratas/Java/rei-dos-piratas
-```
-
-3. Compile a aplicação:
+2. Compile a aplicação:
 
 ```bash
 mvn clean install
 ```
 
-4. Execute a aplicação:
+3. Execute a aplicação:
 
 ```bash
 mvn spring-boot:run
