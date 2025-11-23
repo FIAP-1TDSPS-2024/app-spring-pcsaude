@@ -24,7 +24,7 @@ public class Medicao {
 
     // --- Usuário associado ---
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "dispositivo_id", nullable = false)
+    @JoinColumn(name = "dispositivo_id", referencedColumnName = "uuid", nullable = false)
     private Dispositivo dispositivo;
 
     @Enumerated(EnumType.STRING)

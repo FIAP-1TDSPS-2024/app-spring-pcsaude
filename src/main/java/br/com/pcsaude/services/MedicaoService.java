@@ -8,7 +8,6 @@ import br.com.pcsaude.enums.GrauAlertaEnum;
 import br.com.pcsaude.enums.PosturaEnum;
 import br.com.pcsaude.exceptions.ResourceNotFoundException;
 import br.com.pcsaude.repositories.MedicaoRepository;
-import br.com.pcsaude.security.CustomUserDetails;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -24,9 +23,13 @@ public class MedicaoService {
 
     private final AlertaService alertaService;
 
-    public MedicaoService(MedicaoRepository repository, AlertaService alertaService) {
+    private final DispositivoService dispositivoService;
+
+    public MedicaoService(MedicaoRepository repository, AlertaService alertaService, DispositivoService dispositivoService) {
         this.repository = repository;
         this.alertaService = alertaService;
+        this.dispositivoService = dispositivoService;
+
     }
 
     public Medicao save(Medicao medicao){
@@ -41,10 +44,10 @@ public class MedicaoService {
 
         Usuario usuario = (Usuario) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
-        Dispositivo dispositivo = usuario.getDispositivo();
+        Dispositivo dispositivo = dispositivoService.findById(usuario.getDispositivo().getUuid());
 
         return this.repository
-                .findAllByDispositivo_Uuid(
+                .findAllByDispositivoUuid(
                         dispositivo.getUuid(),
                         Pageable
                         .ofSize(size)
@@ -55,11 +58,11 @@ public class MedicaoService {
 
         Usuario usuario = (Usuario) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
-        Dispositivo dispositivo = usuario.getDispositivo();
+        Dispositivo dispositivo = dispositivoService.findById(usuario.getDispositivo().getUuid());
 
         try {
             return this.repository
-                    .findFisrtByDispositivo_UuidOrderByMomentoMedicaoDesc(dispositivo.getUuid())
+                    .findFirstByDispositivoUuidOrderByMomentoMedicaoDesc(dispositivo.getUuid())
                     .orElseThrow();
         }
         catch (NoSuchElementException e){
