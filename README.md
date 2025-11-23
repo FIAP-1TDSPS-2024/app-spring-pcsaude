@@ -15,7 +15,7 @@
 
 > Acesse o Link abaixo para assistir ao PITCH.
 
-[Vídeo Explicativo no YouTube](https://www.youtube.com/watch?v=wSOUlz6PsAY)
+[Introdução ao SMART DESK!](https://youtu.be/LLsbAFOJw1s)
 
 ## Vídeo explicativo da solução
 
