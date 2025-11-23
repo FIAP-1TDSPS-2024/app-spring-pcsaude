@@ -23,8 +23,13 @@
 
 [Vídeo Explicativo no YouTube](https://youtu.be/CcEMJrcE6EA)
 
-## 👥 Integrantes do Grupo – CATECH
+## Link do deploy da API Java
 
+> Acesse o link para chamar os metodos da API:
+
+[Deploy na Azure](http://4.206.131.182:8080)
+
+## 👥 Integrantes do Grupo – CATECHhttp://4.206.131.182:8080
 * **RM561144**: Jonas Oliveira - Responsável por Java e banco de dados
 * **RM559336**: Wendell Dourado - Responsável por Mobile e Devops
 * **RM559622**: Daniel Batista - Responsável por .NET, IoT e QA
