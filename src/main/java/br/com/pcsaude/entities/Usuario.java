@@ -69,6 +69,9 @@ public class Usuario implements UserDetails {
     @JoinColumn(name = "dispositivo_id")
     private Dispositivo dispositivo;
 
+    @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<Suporte> suportes;
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return List.of(new SimpleGrantedAuthority("ROLE_" + role.name()));

@@ -77,4 +77,15 @@ public class UsuarioService {
 
         return this.repository.save(usuarioOriginal);
     }
+
+    public void delete(Long id){
+
+        Usuario usuarioLogado = (Usuario) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+
+        if (!Objects.equals(usuarioLogado.getId(), id)){
+            throw new RecursoNaoPertencenteException("Apenas o usuário pode deletar seu perfil");
+        }
+
+        this.repository.deleteById(id);
+    }
 }
